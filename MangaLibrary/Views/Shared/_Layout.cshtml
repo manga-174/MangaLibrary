@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Manga Libaray</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Manga Library", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    
+                    <li>@Html.ActionLink("Publisher", "Index", "Publisher")</li>
+                    <li>@Html.ActionLink("Member", "Index", "Member")</li>
+                    <li>@Html.ActionLink("Book", "Index", "Book")</li>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                                            <li>@Html.ActionLink("Category", "Index", "Category")</li>
+                                            <li>@Html.ActionLink("Author", "Index", "Author")</li>
+                                            <li>@Html.ActionLink("Issue Book", "Index", "IssueBook")</li>
+                                            <li>@Html.ActionLink("Return Book", "Index", "ReturnBook")</li>
+                    }
+                    
+
+                </ul>
+
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    
+         <footer class="text-center" style="color:red">
+                <p>&copy; @DateTime.Now.Year - Manga Library-All Rights Reserved</p>
+            </footer class="text-center">
+           
+   
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
