@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace MangaLibrary.Controllers
 {
-    [Authorize (Users ="Manga@gmail.com")]
+    [Authorize (Roles ="Admin")]
    
    
     public class IssueBookController : Controller
@@ -43,7 +43,7 @@ namespace MangaLibrary.Controllers
             var memberid = (from s in db.members where s.id == mid select s.name).ToList();
             return Json(memberid,JsonRequestBehavior.AllowGet);
         }
-        
+
         [HttpPost]
         public ActionResult Save(issuebook issue)
         {
@@ -51,8 +51,10 @@ namespace MangaLibrary.Controllers
             {
                 db.issuebooks.Add(issue);
                 db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
+            
             return View(issue);
         }
        

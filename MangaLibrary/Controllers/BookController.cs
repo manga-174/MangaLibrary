@@ -57,6 +57,7 @@ namespace MangaLibrary.Controllers
             {
                 db.books.Add(book);
                 db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
 

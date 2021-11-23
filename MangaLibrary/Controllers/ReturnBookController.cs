@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace MangaLibrary.Controllers
 {
-    [Authorize(Users = "Manga@gmail.com")]
+    [Authorize(Roles = "Admin")]
     public class ReturnBookController : Controller
     {
         // GET: ReturnBook
