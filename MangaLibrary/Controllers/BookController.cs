@@ -38,6 +38,7 @@ namespace MangaLibrary.Controllers
         }
 
         // GET: Book/Create
+        [Authorize(Roles ="Admin")]
         public ActionResult Create()
         {
             ViewBag.a_id = new SelectList(db.authors, "id", "name");

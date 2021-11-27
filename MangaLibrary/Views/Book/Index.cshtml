@@ -5,10 +5,12 @@
 }
 
 <h2 class="text-center">Books</h2>
+@if (User.IsInRole("Admin"))
+{
+<h3>
+    @Html.ActionLink("Add Books", "Create",null , new { @class = "btn btn-primary" })
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+</h3>}
 <table class="table">
     <tr>
         <th>
@@ -58,20 +60,20 @@
         <td>
             @Html.DisplayFor(modelItem => item.publisher.name)
         </td>
-        <td>
+        <td class="btn-group">
             @if (User.IsInRole("Admin"))
             {
 
-                @Html.ActionLink("Edit", "Edit", new { id = item.id })
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-info" })
 
             @*}
             @if (User.IsInRole("Admin"))
             {*@
 
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
 
             }
-            @Html.ActionLink("Details", "Details", new { id = item.id })
+            @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-primary" })
             
         </td>
     </tr>
