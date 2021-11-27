@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MangaLibrary.Models;
+using CrystalDecisions.CrystalReports.Engine;
+using System.IO;
+using System.Reflection;
 
 namespace MangaLibrary.Controllers
 {
@@ -20,6 +23,44 @@ namespace MangaLibrary.Controllers
         {
             var books = db.books.Include(b => b.author).Include(b => b.category).Include(b => b.publisher);
             return View(books.ToList());
+        }
+        public ActionResult ExportBook()
+        {
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Report"), "Books.rpt"));
+            rd.SetDataSource(ListToDataTable(db.books.ToList()));
+           Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            try
+            {
+                Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                stream.Seek(0, SeekOrigin.Begin);
+                return File(stream, "application/pdf", "BookList.pdf");
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        private DataTable ListToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable(typeof(T).Name);
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach(PropertyInfo prop in Props)
+            {
+                dataTable.Columns.Add(prop.Name);
+            }
+            foreach(T item in items)
+            {
+                var values = new object[Props.Length];
+                for(int i=0; i<Props.Length;i++)
+                {
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+            return dataTable;
         }
 
         // GET: Book/Details/5

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2 class="text-center">Books</h2>
@@ -9,7 +10,7 @@
 {
 <h3>
     @Html.ActionLink("Add Books", "Create",null , new { @class = "btn btn-primary" })
-
+    <a class="btn btn-info" href="@Url.Action("ExportBook")">Download Books</a>
 </h3>}
 <table class="table">
     <tr>
